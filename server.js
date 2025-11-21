@@ -7,7 +7,8 @@ const app = express();
 
 const allowedOrigins = [
     "http://localhost:8000",
-    "https://platform.uplers.com/",
+    "http://127.0.0.1:8000",
+    "https://platform.uplers.com",
 ];
 
 app.use(cors({
@@ -31,6 +32,7 @@ app.use(bodyParser.json({ limit: "5mb" }));
 app.use(bodyParser.text({ limit: "5mb", type: ["text/html", "application/xhtml+xml"] }));
 
 app.post("/generate-pdf", async (req, res) => {
+    console.log("🔥 Incoming Origin:", req.headers.origin);
     const html = typeof req.body === "string" ? req.body : req.body?.html;
     if (!html) return res.status(400).json({ error: "Missing HTML" });
 
